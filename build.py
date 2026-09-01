@@ -789,7 +789,7 @@ TESTIMONIALS_PAGE = """%(head)s
             our days-sales-outstanding went from 34 days to 9, and I have not sent a
             single reminder email myself.&rdquo;</p>
           <div class="quote__who">
-            <span class="avatar" style="background:rgba(255,255,255,.24)">JC</span>
+            <span class="avatar" style="background:rgba(6,26,70,.38)">JC</span>
             <span><b>John Clayton</b><span>Managing director, Orbitpay</span></span>
           </div>
         </article>
@@ -957,7 +957,7 @@ BLOG_PAGE = """%(head)s
       <article class="split reveal" style="gap:34px;align-items:center">
         <div class="post__thumb" style="border-radius:var(--r-lg);aspect-ratio:4/3">%(chart)s</div>
         <div>
-          <span class="pill-tag" style="background:var(--blue-tint);color:var(--blue)">Product</span>
+          <span class="pill-tag" style="background:var(--blue-tint);color:var(--blue-deep)">Product</span>
           <h3 style="font-size:var(--fs-h3);margin:14px 0 10px">The 2026 state of getting paid in West Africa</h3>
           <p style="color:var(--muted);font-size:.95rem">We looked at 4.1 million transactions across
             ten thousand Finbolt businesses to answer one question: how long does it actually
