@@ -19,6 +19,7 @@ $finbolt_phone = get_theme_mod( 'finbolt_phone', '+234 700 346 6538' );
 ?>
   </main>
 
+<?php if ( ! finbolt_elementor_location( 'footer' ) ) : ?>
   <footer class="footer">
     <div class="wrap footer__grid">
       <div>
@@ -101,6 +102,7 @@ $finbolt_phone = get_theme_mod( 'finbolt_phone', '+234 700 346 6538' );
       </span>
     </div>
   </footer>
+<?php endif; ?>
 
 </div>
 <?php wp_footer(); ?>

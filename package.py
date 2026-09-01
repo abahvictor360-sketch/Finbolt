@@ -83,7 +83,7 @@ def build_html(stage):
                  os.path.join(root, "documentation", "index.html"))
 
     os.makedirs(os.path.join(root, "licensing"))
-    for name in ("LICENSE.txt", "third-party-assets.txt"):
+    for name in ("LICENSE.txt", "EULA.txt", "GPL-2.0.txt", "third-party-assets.txt"):
         shutil.copy2(os.path.join(DOCSRC, name), os.path.join(root, "licensing", name))
 
     shutil.copy2(os.path.join(DOCSRC, "CHANGELOG.txt"), os.path.join(root, "CHANGELOG.txt"))
@@ -122,6 +122,8 @@ def build_wp(stage):
         )
 
     shutil.copy2(os.path.join(DOCSRC, "readme-wp.txt"), os.path.join(theme, "readme.txt"))
+    # A GPL-licensed theme has to distribute the licence text with it.
+    shutil.copy2(os.path.join(DOCSRC, "GPL-2.0.txt"), os.path.join(theme, "LICENSE"))
     shutil.copy2(os.path.join(DOCSRC, "CHANGELOG.txt"), os.path.join(theme, "CHANGELOG.txt"))
     if os.path.exists(os.path.join(DOCSRC, "screenshot.png")):
         shutil.copy2(os.path.join(DOCSRC, "screenshot.png"),
@@ -153,6 +155,12 @@ def check_theme(theme):
                                       stdout=subprocess.DEVNULL)
 
     harness = os.path.join(ROOT, "packaging", "tests", "render.php")
+    # Three states: Elementor absent, Elementor active, and Elementor Theme
+    # Builder supplying the header, footer, single and archive. The last one
+    # proves the theme stands down instead of rendering a second header.
+    for mode in ([], ["--elementor"], ["--takeover"]):
+        subprocess.check_call([php, harness, theme] + mode,
+                              stdout=subprocess.DEVNULL)
     subprocess.check_call([php, harness, theme])
 
 

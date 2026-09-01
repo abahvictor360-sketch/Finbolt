@@ -7,9 +7,15 @@ Initial release.
 
 * Ten static pages on one shared design system: home, about, benefits,
   testimonials, career, blog, support, contact, login, register.
-* WordPress theme with eight page templates, a real blog loop, archive,
+* WordPress theme with nine page templates, a real blog loop, archive,
   search, 404 and comment templates, three menu locations, a blog sidebar
   and a customizer panel for brand, colours, buttons and footer details.
+* Elementor support: a full-width builder page template that drops the card
+  frame, the four Elementor Pro Theme Builder locations registered, widget
+  styles that inherit the design tokens, and an editor that stands the scroll
+  animation down so nothing is left invisible while you work.
+* Licensing: a commercial EULA template for the HTML template, and the verbatim
+  GNU GPL v2 shipped with the WordPress theme as it requires.
 * Staggered scroll reveals, counting figures, hero parallax, scroll progress
   bar and back-to-top, all disabled under prefers-reduced-motion.
 * Every text element meets WCAG AA contrast, measured against the rendered

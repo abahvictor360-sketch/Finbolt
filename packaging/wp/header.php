@@ -19,6 +19,7 @@ defined( 'ABSPATH' ) || exit;
 <?php wp_body_open(); ?>
 <a class="screen-reader-text" href="#content"><?php esc_html_e( 'Skip to content', 'finbolt' ); ?></a>
 <div class="frame">
+<?php if ( ! finbolt_elementor_location( 'header' ) ) : ?>
   <header class="header">
     <div class="wrap header__inner">
       <?php finbolt_brand(); ?>
@@ -50,5 +51,7 @@ defined( 'ABSPATH' ) || exit;
       <a class="btn btn--ghost" href="<?php echo esc_url( finbolt_login_url() ); ?>" style="width:100%;justify-content:center;margin-top:10px"><?php esc_html_e( 'Log in', 'finbolt' ); ?></a>
     </div>
   </div>
+
+<?php endif; ?>
 
   <main id="content">

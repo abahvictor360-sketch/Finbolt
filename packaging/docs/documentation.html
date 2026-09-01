@@ -73,9 +73,11 @@ td code{white-space:nowrap}
     <li><a href="#forms">7. Forms and sign-up</a></li>
     <li><a href="#wp">8. WordPress theme</a></li>
     <li><a href="#wpcustom">9. Customizer</a></li>
-    <li><a href="#a11y">10. Accessibility</a></li>
-    <li><a href="#sell">11. Before you sell</a></li>
-    <li><a href="#support">12. Credits</a></li>
+    <li><a href="#elementor">10. Elementor</a></li>
+    <li><a href="#a11y">11. Accessibility</a></li>
+    <li><a href="#licence">12. Licensing</a></li>
+    <li><a href="#sell">13. Before you sell</a></li>
+    <li><a href="#support">14. Credits</a></li>
   </ol>
   <p class="v">Version 1.0.0</p>
 </nav>
@@ -316,8 +318,69 @@ Template: finbolt
 */</code></pre>
 </section>
 
+<section id="elementor">
+<h2>10. Elementor</h2>
+<p>The theme is built to be edited with Elementor rather than merely to tolerate
+it. Four things are wired up.</p>
+
+<h3>A full-width builder template</h3>
+<p>Create a page, then Page Attributes &rarr; Template &rarr;
+<strong>Finbolt &mdash; Elementor (full width)</strong>. It renders the header and
+footer and hands Elementor everything between them, with no heading band, no
+section padding and no card frame.</p>
+<div class="note"><strong>Why it drops the card.</strong> The design wraps every
+page in a 1280px card with <code>overflow: hidden</code>. That is what gives the
+site its floating look, but it also clips full-bleed sections and stops
+<code>position: sticky</code> from sticking. Builder pages get the
+<code>finbolt-frameless</code> body class, which removes the constraint so
+Elementor controls the full width and sticky widgets work.</div>
+<p>For a page with no theme header or footer at all, use Elementor's own
+<em>Elementor Canvas</em> template. <em>Elementor Full Width</em> works too.</p>
+
+<h3>Theme Builder locations (Elementor Pro)</h3>
+<p>The theme registers the four core locations, so Pro's Theme Builder can replace
+its header, footer, single post and archive templates. Build a header in Theme
+Builder and the theme's own header steps aside — you will not get two.</p>
+<table>
+<tr><th>Location</th><th>Replaces</th></tr>
+<tr><td><code>header</code></td><td>The header bar and mobile drawer</td></tr>
+<tr><td><code>footer</code></td><td>The four-column footer and the bar beneath it</td></tr>
+<tr><td><code>single</code></td><td><code>single.php</code>, the whole post layout</td></tr>
+<tr><td><code>archive</code></td><td><code>archive.php</code>, category, tag and author listings</td></tr>
+</table>
+
+<h3>Widgets inherit the design</h3>
+<p>Elementor's headings, text, buttons and form fields pick up the theme's tokens,
+so a widget you drop in looks like the rest of the site without restyling it:
+pill buttons in the primary blue with the same shadow and hover lift, form fields
+on the wash background with the blue focus ring, headings in Plus Jakarta Sans.
+Elementor's boxed containers are capped at the design's <code>--wrap</code> width.
+A heading or text widget placed inside a <code>.band</code> section turns white
+automatically, so it stays readable on the blue.</p>
+<p>All of it is scoped under the <code>finbolt-elementor</code> body class, near the
+end of the theme's <code>style.css</code>. Delete that block if you would rather
+Elementor's own defaults win.</p>
+
+<h3>The editor gets out of the way</h3>
+<p>The theme's scroll reveals start elements at <code>opacity: 0</code>. Inside a
+builder that would make a freshly dropped widget invisible until something
+scrolled, which reads as a bug. So in the Elementor editor the theme treats the
+page as reduced-motion: everything is visible immediately, the parallax is off,
+and the scroll progress bar and back-to-top button are not injected — they would
+otherwise float over Elementor's own panels.</p>
+<p>Your visitors still get the full animation. It is only the editing view that
+stands down.</p>
+
+<h3>Global colours</h3>
+<p>Elementor's Site Settings &rarr; Global Colors and the theme's customizer are
+separate systems. Set the theme's three tokens under Appearance &rarr; Customize
+&rarr; Finbolt theme &rarr; Colours, then mirror them into Elementor's global
+palette so widgets you style there match. Whichever you treat as the source of
+truth, pick one.</p>
+</section>
+
 <section id="a11y">
-<h2>10. Accessibility</h2>
+<h2>11. Accessibility</h2>
 <p>What the template already does, and what to preserve as you edit:</p>
 <ul>
 <li>Every text element clears WCAG AA contrast, measured against the rendered
@@ -338,14 +401,42 @@ its own backdrop, which is the wrong direction. Check any new section at 320px a
 in a reduced-motion browser.</div>
 </section>
 
+<section id="licence">
+<h2>12. Licensing</h2>
+<p>Two products, two licences. Both ship in the HTML package's
+<code>licensing/</code> folder.</p>
+<table>
+<tr><th>File</th><th>Governs</th></tr>
+<tr><td><code>EULA.txt</code></td><td>The HTML template. A single-end-product commercial licence.</td></tr>
+<tr><td><code>GPL-2.0.txt</code></td><td>The WordPress theme. Verbatim GNU GPL v2, also shipped inside the theme as <code>LICENSE</code>.</td></tr>
+<tr><td><code>LICENSE.txt</code></td><td>A plain-language overview of which applies where.</td></tr>
+</table>
+<div class="note warn"><strong>The EULA is a template, not legal advice.</strong>
+Every <code>[BRACKETED]</code> field needs filling in — your legal name, support
+terms, jurisdiction — and it should be read by a qualified lawyer in your
+jurisdiction before your first sale. It is written to industry convention as a
+sound starting point, nothing more.</div>
+<h3>Why the theme is GPL</h3>
+<p>A WordPress theme calls WordPress functions, which makes it a derivative work
+of WordPress, which is GPL. So the theme is GPL-2.0-or-later, and it says so in
+its <code>style.css</code> header. This is completely normal for a commercial
+theme — paid GPL themes are sold every day. You may charge for the files, for
+support and for updates. You may not stop a buyer redistributing the theme's PHP.
+If that is unacceptable, sell the HTML template only.</p>
+<h3>If you sell through a marketplace</h3>
+<p>ThemeForest, Creative Market and similar impose their own Regular and Extended
+licence terms on every sale. In that case delete <code>EULA.txt</code> from the
+package rather than shipping a second, conflicting licence.</p>
+</section>
+
 <section id="sell">
-<h2>11. Before you sell</h2>
+<h2>13. Before you sell</h2>
 <p>Housekeeping worth doing once, before the first buyer:</p>
 <ul>
-<li><strong>Decide your licence.</strong> The source repository carries an MIT
-licence, which lets anyone redistribute and resell the code freely — that works
-against selling it. Replace it with your own EULA, or rely on your marketplace's
-licence terms. See <code>licensing/LICENSE.txt</code>.</li>
+<li><strong>Fill in the EULA.</strong> <code>licensing/EULA.txt</code> is a
+template with <code>[BRACKETED]</code> fields for your legal name, support terms
+and jurisdiction. Fill them in and have a lawyer read it. The repository's MIT
+licence has already been replaced with it — MIT let anyone resell the code.</li>
 <li><strong>The WordPress theme is GPL</strong> and has to be, because it calls
 WordPress functions. You can still charge for files, support and updates; you
 cannot stop a buyer redistributing the PHP. Price accordingly.</li>
@@ -364,7 +455,7 @@ requests.</li>
 </section>
 
 <section id="support">
-<h2>12. Credits</h2>
+<h2>14. Credits</h2>
 <p><strong>Fonts</strong> — Plus Jakarta Sans and Inter, both SIL Open Font
 License 1.1, loaded from Google Fonts. To self-host, drop the
 <code>.woff2</code> files into <code>assets/fonts/</code>, swap the Google Fonts

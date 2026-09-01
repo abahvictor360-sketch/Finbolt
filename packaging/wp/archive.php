@@ -8,6 +8,11 @@
 defined( 'ABSPATH' ) || exit;
 
 get_header();
+
+if ( finbolt_elementor_location( 'archive' ) ) {
+	get_footer();
+	return;
+}
 ?>
   <section class="band pagehead">
     <div class="wrap">

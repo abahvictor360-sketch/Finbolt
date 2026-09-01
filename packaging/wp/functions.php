@@ -12,6 +12,7 @@ define( 'FINBOLT_VERSION', '1.0.0' );
 require_once get_template_directory() . '/inc/nav-walker.php';
 require_once get_template_directory() . '/inc/template-tags.php';
 require_once get_template_directory() . '/inc/customizer.php';
+require_once get_template_directory() . '/inc/elementor.php';
 
 /**
  * Theme supports, menus and content width.

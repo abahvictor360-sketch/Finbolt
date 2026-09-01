@@ -9,6 +9,11 @@ defined( 'ABSPATH' ) || exit;
 
 get_header();
 
+if ( finbolt_elementor_location( 'single' ) ) {
+	get_footer();
+	return;
+}
+
 while ( have_posts() ) :
   the_post();
   $finbolt_cats = get_the_category();

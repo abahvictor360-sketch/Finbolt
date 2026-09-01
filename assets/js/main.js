@@ -63,9 +63,14 @@
   });
 
   /* ---- Motion preference ------------------------------------------------ */
-  var reduce = window.matchMedia
+  /* Inside a page builder's editor, treat the page as reduced-motion: a widget
+     that starts at opacity 0 waiting for a scroll reads as a broken widget. */
+  var editing = !!(window.FINBOLT && window.FINBOLT.editing) ||
+    document.body.classList.contains("elementor-editor-active");
+
+  var reduce = editing || (window.matchMedia
     ? window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    : false;
+    : false);
 
   /* ---- Scroll reveal ---------------------------------------------------- */
   /* Repeated items (cards, stats, rows) are promoted to reveal targets here
@@ -122,7 +127,9 @@
   });
 
   var targets = document.querySelectorAll(".reveal");
-  if ("IntersectionObserver" in window && targets.length) {
+  if (editing) {
+    targets.forEach(function (t) { t.classList.add("is-in"); });
+  } else if ("IntersectionObserver" in window && targets.length) {
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
@@ -198,6 +205,8 @@
   }
 
   /* ---- Scroll-linked chrome and parallax --------------------------------- */
+  /* Skipped while editing: injected fixed chrome would sit over the builder UI. */
+  if (!editing) {
   var progress = document.createElement("div");
   progress.className = "progress";
   document.body.appendChild(progress);
@@ -240,6 +249,7 @@
     requestAnimationFrame(onScroll);
   }, { passive: true });
   onScroll();
+  }
 
   /* ---- Forms (front-end only — no server attached) ---------------------- */
   document.querySelectorAll("[data-demo-form]").forEach(function (form) {

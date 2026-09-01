@@ -6,7 +6,9 @@ WHAT IS IN THIS PACKAGE
 -----------------------
   template/         The site. Ten pages, one stylesheet, one script.
   documentation/    Open index.html in a browser.
-  licensing/        Licence notes and third-party asset credits.
+  licensing/        EULA.txt (the HTML template's commercial licence),
+                    GPL-2.0.txt (the WordPress theme's licence), an overview
+                    and third-party asset credits.
   CHANGELOG.txt
 
 QUICK START

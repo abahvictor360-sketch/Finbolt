@@ -1,38 +1,53 @@
-Finbolt — licensing
-===================
+Finbolt — licensing overview
+============================
 
-YOUR CODE
----------
-This template's own HTML, CSS, JavaScript and PHP are yours to license as you
-see fit. Two common choices when selling:
+Two products, two licences. This file explains which is which; the licences
+themselves are the other files in this folder.
 
-  * A marketplace licence. If you sell through a marketplace (ThemeForest,
-    Creative Market and similar) their Regular/Extended licence terms apply and
-    you do not ship your own EULA. Delete this file and let theirs govern.
+  EULA.txt      The commercial end user licence for the HTML template.
+                >>> A TEMPLATE. Fill in every [BRACKETED] field and have a
+                >>> lawyer review it before your first sale.
 
-  * Your own EULA. If you sell direct, replace this file with your end-user
-    licence agreement. State clearly how many end products one purchase covers,
-    whether the buyer may resell or redistribute the files, and what support and
-    updates they get.
+  GPL-2.0.txt   The GNU General Public License v2, which governs the WordPress
+                theme. Verbatim, unmodified. It also ships inside the theme
+                package as LICENSE.
 
-WORDPRESS THEME
+THE HTML TEMPLATE
+-----------------
+Yours to license as you choose. EULA.txt is a conventional single-end-product
+licence: the buyer may build one website, modify it freely, use it commercially
+and hand it to a client, but may not resell or redistribute the template itself.
+
+If you sell through a marketplace (ThemeForest, Creative Market and similar),
+their Regular and Extended licence terms govern the sale instead. In that case
+delete EULA.txt from the package rather than shipping a second, conflicting
+licence.
+
+THE WORDPRESS THEME
+-------------------
+GPL-2.0-or-later, and it has to be: a theme that calls WordPress functions is a
+derivative work of WordPress. This is normal and expected for a commercial theme.
+Paid GPL themes are sold every day.
+
+What it means in practice:
+
+  * You may charge for the files, for support, and for updates.
+  * You may keep your trade mark, brand name and demo imagery out of the grant.
+  * You may NOT stop a buyer redistributing the theme's PHP, CSS and JS.
+
+If that last point is unacceptable to you, sell the HTML template only.
+
+THIS REPOSITORY
 ---------------
-The WordPress theme in the separate package is declared GPL-2.0-or-later in its
-style.css header, because a theme that calls WordPress functions is a derivative
-work of WordPress. This is the normal, expected licence for a commercial theme —
-paid themes are sold under the GPL every day, and it does not stop you charging
-for the files, for support, or for updates. What it does mean is you cannot stop
-a buyer from redistributing the theme's PHP. Price and package accordingly.
+The repository root now carries EULA.txt as its LICENSE, replacing the MIT
+licence it shipped with. MIT let anyone redistribute and resell the code freely,
+which worked directly against selling it.
 
-If that is not acceptable, sell the HTML template only.
-
-NOTE ON THIS REPOSITORY
------------------------
-The source repository currently carries an MIT licence file. MIT lets anyone
-redistribute and resell the code freely, which works against selling it. Decide
-what you want before the first sale and update the repository to match — see the
-"Before you sell" section of the documentation.
+If you would rather keep the source MIT-licensed for your own reasons, that is a
+legitimate choice — but understand that it grants every reader the right to
+resell what you are trying to sell.
 
 THIRD-PARTY ASSETS
 ------------------
-See third-party-assets.txt.
+See third-party-assets.txt. Short version: two OFL-licensed Google fonts, and
+nothing else — every icon is original inline SVG and there are no raster images.

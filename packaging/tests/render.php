@@ -27,6 +27,11 @@ if ( false !== $flag && isset( $argv[ $flag + 1 ] ) ) {
 
 $GLOBALS['stub_posts'] = 1;   // one fake post for the loops
 $GLOBALS['dump_mode'] = false;
+// --elementor simulates the plugin being active; --takeover additionally has
+// Elementor Theme Builder supplying the header, footer, single and archive.
+$GLOBALS['elementor']  = in_array( '--elementor', $argv, true ) || in_array( '--takeover', $argv, true );
+$GLOBALS['takeover']   = in_array( '--takeover', $argv, true );
+$GLOBALS['is_builder'] = false;
 
 /* ---- i18n + escaping ---------------------------------------------------- */
 function __( $t, $d = null ) { return $t; }
@@ -127,6 +132,11 @@ function get_search_query() { return 'settlement'; }
 function is_front_page() { return true; }
 function is_singular() { return false; }
 function is_admin() { return false; }
+function did_action( $h ) {
+	return ( 'elementor/loaded' === $h && $GLOBALS['elementor'] ) ? 1 : 0;
+}
+function is_page_template( $t = '' ) { return $GLOBALS['is_builder'] ?? false; }
+function wp_add_inline_script( $h, $js, $pos = 'after' ) { $GLOBALS['inline_js'][] = $js; }
 function get_queried_object_id() { return 0; }
 function comments_open() { return false; }
 function get_comments_number() { return 0; }
@@ -169,6 +179,18 @@ function get_the_archive_title() { return 'Category: Product'; }
 function the_archive_description( $b = '', $a = '' ) {}
 
 $GLOBALS['dump_mode'] = (bool) $dump;
+
+if ( $GLOBALS['elementor'] ) {
+	// Elementor's public helper. Returns true when a Theme Builder template
+	// covers this location, in which case the theme must not render its own.
+	function elementor_theme_do_location( $location ) {
+		if ( ! $GLOBALS['takeover'] ) {
+			return false;
+		}
+		echo "<!-- elementor:$location -->";
+		return true;
+	}
+}
 
 /* ---- core classes ------------------------------------------------------- */
 class Walker {}
@@ -216,12 +238,19 @@ foreach ( $templates as $tpl ) {
 		continue;
 	}
 
+	$takeover = $GLOBALS['takeover'];
 	$checks = array(
 		'doctype'      => stripos( $html, '<!doctype html>' ) === 0,
 		'frame'        => strpos( $html, 'class="frame"' ) !== false,
-		'header'       => strpos( $html, 'class="header"' ) !== false,
+		'header'       => $takeover
+			? ( strpos( $html, 'class="header"' ) === false
+				&& strpos( $html, '<!-- elementor:header -->' ) !== false )
+			: strpos( $html, 'class="header"' ) !== false,
 		'main closed'  => strpos( $html, '</main>' ) !== false,
-		'footer'       => strpos( $html, 'class="footer"' ) !== false,
+		'footer'       => $takeover
+			? ( strpos( $html, 'class="footer"' ) === false
+				&& strpos( $html, '<!-- elementor:footer -->' ) !== false )
+			: strpos( $html, 'class="footer"' ) !== false,
 		'closed html'  => strpos( $html, '</html>' ) !== false,
 		'no raw php'   => strpos( $html, '<?php' ) === false,
 		'no .html link' => ! preg_match( '/href="[a-z0-9\-]+\.html"/', $html ),
@@ -256,5 +285,8 @@ printf( "sidebars            : %s\n", implode( ', ', $GLOBALS['sidebars'] ?? arr
 printf( "styles enqueued     : %s\n", implode( ', ', $GLOBALS['styles'] ?? array() ) );
 printf( "scripts enqueued    : %s\n", implode( ', ', $GLOBALS['scripts'] ?? array() ) );
 printf( "localized to JS     : %s\n", json_encode( $GLOBALS['localized'] ?? array() ) );
+printf( "elementor active    : %s%s\n",
+	$GLOBALS['elementor'] ? 'yes' : 'no',
+	$GLOBALS['takeover'] ? ' (theme builder supplying header/footer/single/archive)' : '' );
 
 exit( $fail ? 1 : 0 );

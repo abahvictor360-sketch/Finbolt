@@ -20,6 +20,11 @@ The theme ships with three menu locations, a blog sidebar, and a customizer
 panel for the wordmark, three palette colours, the call-to-action button and
 link, and the footer blurb, contact details and social profiles.
 
+The theme is built for Elementor: a full-width builder page template, the four
+Theme Builder locations registered for Elementor Pro, widget styles that inherit
+the theme's design tokens, and an editor that stands the scroll animation down so
+nothing you drop in is left invisible.
+
 Animation is disabled for visitors who ask for reduced motion. Every text
 element in the design meets WCAG AA contrast, and the layout is verified from
 320px to 1920px.
@@ -55,6 +60,17 @@ your registration and wp-login.php URLs.
 
 front-page.php holds them as markup. Edit that file, or rebuild the section
 copy from the HTML template's build.py and repackage.
+
+= Does it work with Elementor? =
+
+Yes, and it is set up for it rather than merely compatible. Use the "Finbolt —
+Elementor (full width)" page template for builder pages: it drops the card frame
+so sections can run edge to edge and sticky widgets work. With Elementor Pro, the
+theme registers the header, footer, single and archive Theme Builder locations, so
+a header you build there replaces the theme's instead of appearing alongside it.
+Elementor's headings, buttons and form fields inherit the theme's design tokens.
+Inside the editor the scroll animation is disabled, so a widget you add is visible
+immediately.
 
 = Can I change the colours? =
 
