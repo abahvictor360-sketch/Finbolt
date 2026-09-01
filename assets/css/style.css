@@ -61,6 +61,8 @@ html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 
 body {
   margin: 0;
+  overflow-wrap: break-word;
+  text-wrap: pretty;
   background: var(--page);
   color: var(--ink-soft);
   font-family: var(--font-body);
@@ -75,6 +77,7 @@ button { font: inherit; cursor: pointer; }
 ul { margin: 0; padding: 0; list-style: none; }
 
 h1, h2, h3, h4 {
+  text-wrap: balance;
   font-family: var(--font-display);
   color: var(--ink);
   line-height: 1.14;
@@ -204,6 +207,7 @@ h1, h2, h3, h4 {
   color: #fff;
   font-size: var(--fs-small);
   font-weight: 600;
+  white-space: nowrap;
   border: 0;
   transition: transform .18s ease, box-shadow .18s ease;
 }
@@ -253,6 +257,8 @@ h1, h2, h3, h4 {
   background: #fff;
   border-radius: var(--r-lg);
   padding: 18px;
+  max-height: calc(100dvh - 28px);
+  overflow-y: auto;
   transform: translateY(-14px);
   transition: transform .24s ease;
 }
@@ -345,6 +351,7 @@ h1, h2, h3, h4 {
   font-size: var(--fs-small); color: rgba(255,255,255,.9);
   margin-top: 20px;
 }
+.crumbs a, .crumbs span { display: inline-block; padding: 5px 0; }
 .crumbs a:hover { color: #fff; text-decoration: underline; }
 
 /* --- Eyebrow pill --------------------------------------------------------- */
@@ -610,7 +617,7 @@ h1, h2, h3, h4 {
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
   flex-wrap: wrap;
 }
-.fcard__stat { display: inline-flex; align-items: center; gap: 8px; font-size: var(--fs-tiny); color: var(--muted); }
+.fcard__stat { display: inline-flex; align-items: center; gap: 8px; font-size: var(--fs-tiny); color: var(--muted); min-width: 0; }
 .fcard__stat b { font-family: var(--font-display); color: var(--ink); font-size: .85rem; }
 
 /* highlighted middle card */
@@ -707,6 +714,7 @@ h1, h2, h3, h4 {
   gap: 56px;
   align-items: center;
 }
+.split > * { min-width: 0; }
 .split__list { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 26px; }
 .split__list li {
   display: inline-flex; align-items: center; gap: 8px;
@@ -740,7 +748,11 @@ h1, h2, h3, h4 {
 .notice i svg { width: 11px; height: 11px; }
 
 /* --- Stats ---------------------------------------------------------------- */
-.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
+.stats > * { min-width: 0; }
+/* Two-up variant; a class rather than an inline style so the narrow
+   breakpoints can still collapse it to one column. */
+.stats--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .stat {
   background: #fff; border-radius: var(--r-lg);
   box-shadow: inset 0 0 0 1px var(--line);
@@ -948,7 +960,8 @@ h1, h2, h3, h4 {
   margin-bottom: 14px;
   font-weight: 700;
 }
-.footer__links { display: grid; gap: 10px; }
+.footer__links { display: grid; gap: 4px; }
+.footer__links a { padding: 6px 0; }
 .footer__links a { font-size: .9rem; color: var(--muted); transition: color .16s ease; }
 .footer__links a:hover { color: var(--blue); }
 .social { display: flex; gap: 9px; }
@@ -1031,6 +1044,12 @@ h1, h2, h3, h4 {
 [data-count] { font-variant-numeric: tabular-nums; }
 
 /* --- Responsive ----------------------------------------------------------- */
+@media (min-width: 981px) and (max-width: 1180px) {
+  .header__inner { gap: 12px; }
+  .nav a { padding: 9px 10px; }
+  .header__cta { margin-left: 4px; padding-left: 14px; }
+}
+
 @media (max-width: 980px) {
   .nav, .header__cta { display: none; }
   .burger { display: inline-flex; }
@@ -1059,8 +1078,12 @@ h1, h2, h3, h4 {
   .fcard--live { transform: none; }
   .fcard--live:hover { transform: translateY(-4px); }
   .constellation { grid-template-columns: 1fr; }
-  .constellation__side { grid-auto-flow: column; justify-content: center; gap: 12px; }
+  .constellation__side { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
   .constellation__side--right { justify-items: center; }
+}
+
+@media (max-width: 980px) {
+  .split { grid-template-columns: minmax(0, 1fr); }
 }
 
 @media (max-width: 620px) {
@@ -1076,6 +1099,25 @@ h1, h2, h3, h4 {
   .row-card .btn { margin-left: 0; }
   .cta, .footer__bar { margin-inline: 12px; }
   .tl { grid-template-columns: 1fr; gap: 6px; }
+  .totop { right: 14px; bottom: 14px; width: 40px; height: 40px; }
+}
+
+@media (max-width: 420px) {
+  .frame { margin: 8px; }
+  .wrap { padding-inline: 16px; }
+  .stats { grid-template-columns: 1fr; }
+  .stat b { font-size: 1.75rem; }
+  .fcard__foot { gap: 14px; }
+  .fcard__foot .btn, .row-card .btn { width: 100%; justify-content: center; }
+  .invoice, .mock { padding: 16px 14px; }
+  .capture { padding-left: 16px; }
+  .cta__inner { padding: 56px 0; }
+}
+
+@media (max-height: 460px) and (orientation: landscape) {
+  .hero { padding-top: 96px; }
+  .pagehead { padding: 96px 0 48px; }
+  .hero__stage { margin-top: 30px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -555,7 +555,7 @@ ABOUT = """%(head)s
         <a class="btn btn--primary" href="career.html" style="margin-top:12px">Work with us%(arrow)s</a>
       </div>
       <div class="reveal">
-        <div class="stats" style="grid-template-columns:1fr 1fr">
+        <div class="stats stats--2">
           <div class="stat"><b>10,400+</b><span>Businesses paid</span></div>
           <div class="stat"><b>$2.1B</b><span>Processed in 2025</span></div>
           <div class="stat"><b>11</b><span>Settlement currencies</span></div>
@@ -793,7 +793,7 @@ TESTIMONIALS_PAGE = """%(head)s
             <span><b>John Clayton</b><span>Managing director, Orbitpay</span></span>
           </div>
         </article>
-        <div class="stats" style="grid-template-columns:1fr 1fr">
+        <div class="stats stats--2">
           <div class="stat"><b>4.9/5</b><span>Average review score</span></div>
           <div class="stat"><b>10,400+</b><span>Businesses on Finbolt</span></div>
           <div class="stat"><b>9 min</b><span>Median support reply</span></div>
@@ -863,7 +863,7 @@ CAREER_PAGE = """%(head)s
         </ul>
       </div>
       <div class="reveal">
-        <div class="stats" style="grid-template-columns:1fr 1fr">
+        <div class="stats stats--2">
           <div class="stat"><b>41</b><span>People on the team</span></div>
           <div class="stat"><b>9</b><span>Countries</span></div>
           <div class="stat"><b>3.1 yrs</b><span>Median tenure</span></div>
