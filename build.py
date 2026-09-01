@@ -1421,9 +1421,20 @@ PAGES = [
      REGISTER_PAGE),
 ]
 
-for fname, title, desc, main in PAGES:
-    html = SHELL.format(title=title, desc=desc,
+def render(fname, title, desc, main):
+    return SHELL.format(title=title, desc=desc,
                         header=header(fname), main=main, footer=FOOTER)
-    with open(os.path.join(OUT, fname), "w", encoding="utf-8") as f:
-        f.write(html)
-    print("wrote", fname, len(html), "bytes")
+
+
+def write_all():
+    for fname, title, desc, main in PAGES:
+        html = render(fname, title, desc, main)
+        with open(os.path.join(OUT, fname), "w", encoding="utf-8") as f:
+            f.write(html)
+        print("wrote", fname, len(html), "bytes")
+
+
+# Importable: package.py reads PAGES to build the WordPress templates from the
+# same section markup, so the two products can never drift apart.
+if __name__ == "__main__":
+    write_all()

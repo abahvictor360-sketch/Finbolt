@@ -265,7 +265,9 @@
         if (input) input.focus();
         return;
       }
-      window.location.href = "register.html?email=" + encodeURIComponent(email);
+      var url = (window.FINBOLT && window.FINBOLT.registerUrl) || "register.html";
+      window.location.href = url + (url.indexOf("?") > -1 ? "&" : "?") +
+        "email=" + encodeURIComponent(email);
     });
   });
 

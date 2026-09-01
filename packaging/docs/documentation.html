@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Finbolt — documentation</title>
+<style>
+:root{
+  --blue:#1B6DF0; --blue-deep:#0B45C4; --blue-tint:#E9F1FE; --blue-wash:#F5F8FE;
+  --ink:#0B1220; --ink-soft:#46506B; --muted:#626D87; --line:#E7EBF3; --page:#EDEFF3;
+  --r:14px; --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--ink-soft);
+  font:16px/1.65 system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+.shell{max-width:1180px;margin:26px auto;background:#fff;border-radius:26px;overflow:hidden;
+  box-shadow:0 30px 80px rgba(11,18,32,.10);display:grid;grid-template-columns:262px minmax(0,1fr)}
+h1,h2,h3,h4{color:var(--ink);line-height:1.2;margin:0;font-weight:800;letter-spacing:-.02em}
+a{color:var(--blue-deep)}
+code{font-family:var(--mono);font-size:.88em;background:var(--blue-wash);
+  padding:2px 6px;border-radius:6px;box-shadow:inset 0 0 0 1px var(--line)}
+pre{overflow-x:auto;background:#0D1526;color:#E9F1FE;padding:16px 18px;border-radius:var(--r);
+  font-family:var(--mono);font-size:.85rem;line-height:1.55}
+pre code{background:none;box-shadow:none;padding:0;color:inherit}
+
+nav{background:linear-gradient(170deg,#1E70F2,#0B45C4);color:#fff;padding:30px 22px}
+nav .mark{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.15rem;color:#fff}
+nav .mark span{width:32px;height:32px;display:grid;place-items:center;border-radius:10px;
+  background:rgba(255,255,255,.2);box-shadow:inset 0 0 0 1px rgba(255,255,255,.35)}
+nav ol{list-style:none;margin:26px 0 0;padding:0;display:grid;gap:2px;counter-reset:s}
+nav a{display:block;padding:8px 10px;border-radius:9px;color:rgba(255,255,255,.9);
+  text-decoration:none;font-size:.9rem;font-weight:500}
+nav a:hover{background:rgba(255,255,255,.16);color:#fff}
+nav .v{margin-top:24px;font-size:.75rem;color:rgba(255,255,255,.72)}
+
+main{padding:44px 46px 60px;min-width:0}
+section{margin-bottom:52px;scroll-margin-top:20px}
+section>h2{font-size:1.5rem;padding-bottom:12px;border-bottom:2px solid var(--blue-tint)}
+section>h2+p{margin-top:16px}
+h3{font-size:1.06rem;margin:28px 0 8px}
+p,ul,ol{margin:0 0 14px}
+ul,ol{padding-left:22px}
+li{margin-bottom:7px}
+table{width:100%;border-collapse:collapse;margin:0 0 16px;font-size:.93rem}
+th,td{padding:9px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{color:var(--ink);font-weight:700;background:var(--blue-wash)}
+td code{white-space:nowrap}
+.note{padding:14px 18px;border-radius:var(--r);background:var(--blue-wash);
+  box-shadow:inset 0 0 0 1px var(--line);margin:0 0 16px}
+.note strong{color:var(--ink)}
+.warn{background:#FFF6E8;box-shadow:inset 0 0 0 1px #F3DFBC}
+.tree{font-family:var(--mono);font-size:.83rem;white-space:pre;overflow-x:auto;
+  background:var(--blue-wash);padding:16px 18px;border-radius:var(--r);
+  box-shadow:inset 0 0 0 1px var(--line);color:var(--ink-soft)}
+@media(max-width:900px){
+  .shell{grid-template-columns:1fr;margin:10px;border-radius:20px}
+  main{padding:30px 20px 44px}
+  nav ol{grid-template-columns:1fr 1fr;display:grid}
+}
+</style>
+</head>
+<body>
+<div class="shell">
+<nav>
+  <div class="mark"><span>&#9889;</span>Finbolt</div>
+  <ol>
+    <li><a href="#start">1. Getting started</a></li>
+    <li><a href="#files">2. What is in the box</a></li>
+    <li><a href="#editing">3. Editing the HTML</a></li>
+    <li><a href="#build">4. The build script</a></li>
+    <li><a href="#design">5. Design system</a></li>
+    <li><a href="#animation">6. Animation</a></li>
+    <li><a href="#forms">7. Forms and sign-up</a></li>
+    <li><a href="#wp">8. WordPress theme</a></li>
+    <li><a href="#wpcustom">9. Customizer</a></li>
+    <li><a href="#a11y">10. Accessibility</a></li>
+    <li><a href="#sell">11. Before you sell</a></li>
+    <li><a href="#support">12. Credits</a></li>
+  </ol>
+  <p class="v">Version 1.0.0</p>
+</nav>
+
+<main>
+<h1>Finbolt documentation</h1>
+<p style="margin-top:10px">A payments and fintech marketing template. Ten pages, one
+stylesheet, one script, no build step and no dependencies — plus a matching
+WordPress theme in a separate package.</p>
+
+<section id="start">
+<h2>1. Getting started</h2>
+<p>Open <code>template/index.html</code> in a browser. There is nothing to install.</p>
+<p>If you add anything that fetches a file over http, serve the folder instead of
+opening it directly:</p>
+<pre><code>cd template
+python3 -m http.server 8000
+# then open http://localhost:8000</code></pre>
+<h3>Deploying</h3>
+<p>Any static host works — Netlify, Vercel, Cloudflare Pages, S3, or plain shared
+hosting. Upload the contents of <code>template/</code> to your web root. For GitHub
+Pages, push the folder and set Settings &rarr; Pages &rarr; Deploy from a branch.</p>
+</section>
+
+<section id="files">
+<h2>2. What is in the box</h2>
+<div class="tree">finbolt-html-template/
+├── template/
+│   ├── index.html          about.html       benefits.html
+│   ├── testimonials.html   career.html      blog.html
+│   ├── support.html        contact.html
+│   ├── login.html          register.html
+│   ├── assets/
+│   │   ├── css/style.css   every token, component and breakpoint
+│   │   ├── js/main.js      drawer, tabs, accordion, reveals, forms
+│   │   └── img/            empty, for your own artwork
+│   └── build.py            regenerates all ten pages
+├── documentation/index.html
+├── licensing/
+│   ├── LICENSE.txt
+│   └── third-party-assets.txt
+└── CHANGELOG.txt</div>
+<table>
+<tr><th>Page</th><th>File</th><th>What is on it</th></tr>
+<tr><td>Home</td><td><code>index.html</code></td><td>Hero, trusted-by marquee, audience tabs, invoice showcase, security section, speed split, CTA</td></tr>
+<tr><td>About</td><td><code>about.html</code></td><td>Story, stats, values grid, company timeline</td></tr>
+<tr><td>Benefits</td><td><code>benefits.html</code></td><td>Six benefits, settlement breakdown, three pricing plans</td></tr>
+<tr><td>Testimonials</td><td><code>testimonials.html</code></td><td>Featured quote, review stats, six customer quotes</td></tr>
+<tr><td>Career</td><td><code>career.html</code></td><td>Why Finbolt, team stats, six open roles, perks</td></tr>
+<tr><td>Blog</td><td><code>blog.html</code></td><td>Featured long read, six-post grid</td></tr>
+<tr><td>Support</td><td><code>support.html</code></td><td>Six help categories, FAQ accordion, three contact channels</td></tr>
+<tr><td>Contact</td><td><code>contact.html</code></td><td>Contact form, office details, quick answers</td></tr>
+<tr><td>Log in</td><td><code>login.html</code></td><td>Sign-in form beside a value panel</td></tr>
+<tr><td>Register</td><td><code>register.html</code></td><td>Sign-up form, strength meter, terms gate</td></tr>
+</table>
+</section>
+
+<section id="editing">
+<h2>3. Editing the HTML</h2>
+<p>Pick one of two routes and stick to it.</p>
+<div class="note warn"><strong>Choose before you start.</strong> The pages are
+generated by <code>build.py</code>. If you hand-edit the HTML and later run the
+script, it overwrites your work. Editing HTML directly is perfectly fine — just
+delete <code>build.py</code> first so it cannot bite you.</div>
+<h3>Route A — edit the HTML</h3>
+<p>Every page is plain, indented HTML with no templating. Header, footer and CTA
+markup repeat on each page, so a change to any of them means editing ten files.
+Delete <code>build.py</code>.</p>
+<h3>Route B — edit the build script</h3>
+<p>Better while the site is still changing shape: one edit updates every page.
+See the next section.</p>
+</section>
+
+<section id="build">
+<h2>4. The build script</h2>
+<p><code>build.py</code> needs Python 3 and nothing else. Run it from the
+<code>template/</code> folder:</p>
+<pre><code>python3 build.py</code></pre>
+<p>All ten pages rewrite with the shared header and footer intact. What lives where:</p>
+<table>
+<tr><th>Thing to change</th><th>Where</th></tr>
+<tr><td>Navigation items</td><td><code>NAV</code> list</td></tr>
+<tr><td>Icons</td><td><code>I</code> dictionary of inline SVG</td></tr>
+<tr><td>Header, drawer, CTA button</td><td><code>header()</code></td></tr>
+<tr><td>Footer</td><td><code>FOOTER</code></td></tr>
+<tr><td>The closing call-to-action band</td><td><code>cta_band()</code></td></tr>
+<tr><td>Page titles and meta descriptions</td><td><code>PAGES</code> list at the bottom</td></tr>
+<tr><td>Section copy</td><td>The per-page constants: <code>HOME</code>, <code>ABOUT</code>, <code>BENEFITS_PAGE</code> and so on</td></tr>
+<tr><td>Partner names, plans, quotes, roles, posts, FAQs</td><td>The lists above each page constant</td></tr>
+</table>
+<h3>Adding a page</h3>
+<ol>
+<li>Write the page's sections as a new string constant.</li>
+<li>Add a tuple to <code>PAGES</code>: filename, title, meta description, that constant.</li>
+<li>Add it to <code>NAV</code> if it belongs in the header.</li>
+<li>Run the script.</li>
+</ol>
+</section>
+
+<section id="design">
+<h2>5. Design system</h2>
+<p>Every token is a custom property at the top of <code>assets/css/style.css</code>.
+Change it there and all ten pages follow.</p>
+<h3>Colour</h3>
+<table>
+<tr><th>Token</th><th>Value</th><th>Used for</th></tr>
+<tr><td><code>--blue</code></td><td>#1B6DF0</td><td>Primary actions, links, accent words</td></tr>
+<tr><td><code>--blue-deep</code></td><td>#0B45C4</td><td>Gradient base, small text on tinted pills</td></tr>
+<tr><td><code>--blue-tint</code></td><td>#E9F1FE</td><td>Eyebrow pills, icon tiles</td></tr>
+<tr><td><code>--blue-wash</code></td><td>#F5F8FE</td><td>Alternating sections, form fields</td></tr>
+<tr><td><code>--ink</code></td><td>#0B1220</td><td>Headings</td></tr>
+<tr><td><code>--ink-soft</code></td><td>#46506B</td><td>Body copy</td></tr>
+<tr><td><code>--muted</code></td><td>#626D87</td><td>Secondary and caption text</td></tr>
+<tr><td><code>--line</code></td><td>#E7EBF3</td><td>Card hairlines</td></tr>
+</table>
+<div class="note"><strong>If you change a colour, re-check contrast.</strong> The
+palette was tuned so every text element clears WCAG AA against what actually
+renders behind it, including gradients. Lightening <code>--muted</code> or the
+gradient stops is the quickest way to undo that.</div>
+<h3>Type</h3>
+<p>Plus Jakarta Sans (600/700/800) for headings and figures, Inter (400/500/600/700)
+for body and UI, both from Google Fonts. Sizes are fluid via <code>clamp()</code>,
+so the scale holds from 320px to 1440px without a single font-size media query.</p>
+<h3>Shape and breakpoints</h3>
+<p>Radii are 10 / 16 / 22 / 30px plus fully rounded pills. Layout breakpoints sit at
+1180px (nav spacing), 980px (drawer takes over), 620px and 420px.</p>
+</section>
+
+<section id="animation">
+<h2>6. Animation</h2>
+<table>
+<tr><th>Effect</th><th>Hook</th></tr>
+<tr><td>Scroll reveal</td><td><code>.reveal</code>, plus <code>--left</code>, <code>--right</code>, <code>--scale</code></td></tr>
+<tr><td>Stagger delay</td><td><code>--rd</code>, set per element in JS</td></tr>
+<tr><td>Counting figures</td><td><code>.stat b</code>, <code>.fcard__stat b</code>, <code>.trusted h2 em</code></td></tr>
+<tr><td>Hero parallax</td><td><code>--par</code> on <code>.hero__stage</code></td></tr>
+<tr><td>Scroll progress bar</td><td><code>.progress</code>, injected by JS</td></tr>
+<tr><td>Back to top</td><td><code>.totop</code>, injected by JS</td></tr>
+</table>
+<p>Repeated items — cards, stats, table rows, timeline entries, FAQ items — are
+promoted to reveal targets in JavaScript rather than in the markup, so
+<code>build.py</code> can regenerate pages without losing them. Add a class to the
+<code>ITEMS</code> selector in <code>main.js</code> to include your own components.</p>
+<p>To slow everything down, change the transition duration on <code>.reveal</code>.
+To remove an effect, delete its block in <code>main.js</code> — each is
+self-contained.</p>
+<div class="note">All of it is skipped under
+<code>prefers-reduced-motion: reduce</code>, where the counting figures render their
+final values immediately. Please keep that behaviour.</div>
+</section>
+
+<section id="forms">
+<h2>7. Forms and sign-up</h2>
+<div class="note warn"><strong>Nothing is sent anywhere.</strong> The contact form,
+the email capture fields and the login and register forms are front-end only. They
+validate properly and show a confirmation, but no account is created and no message
+is delivered. Connect them before launch.</div>
+<h3>How the sign-up path is wired</h3>
+<p>The header and drawer "Get started" buttons open <code>register.html</code>. The
+hero and CTA email fields hand their address over as
+<code>register.html?email=…</code>, and the register form reads that parameter and
+prefills it.</p>
+<p>To point the capture fields at a different page, set a global before
+<code>main.js</code> loads:</p>
+<pre><code>&lt;script&gt;window.FINBOLT = { registerUrl: "/signup" };&lt;/script&gt;
+&lt;script src="assets/js/main.js"&gt;&lt;/script&gt;</code></pre>
+<h3>Connecting a backend</h3>
+<p>Each form's submit handler lives in <code>main.js</code>: search for
+<code>data-demo-form</code> (contact), <code>data-capture</code> (email capture) and
+<code>data-auth</code> (login and register). Validation runs first; replace only the
+success branch with your own <code>fetch()</code>. For a hosted service instead, give
+the form an <code>action</code> and <code>method</code> and remove the
+<code>preventDefault()</code>.</p>
+<p>The validation rules are email shape, password length and composition, required
+fields and the terms box. Errors set <code>aria-invalid</code> and
+<code>aria-describedby</code> and report inline.</p>
+</section>
+
+<section id="wp">
+<h2>8. WordPress theme</h2>
+<p>The theme ships as a separate zip, <code>finbolt-wordpress-1.0.0.zip</code>.</p>
+<h3>Install</h3>
+<ol>
+<li>Appearance &rarr; Themes &rarr; Add New &rarr; Upload Theme. Choose the zip,
+Install, then Activate.</li>
+<li>Appearance &rarr; Menus: create a menu, add your pages, assign it to
+<strong>Primary (header and drawer)</strong>. Until you do, the header falls back
+to the page list the design ships with.</li>
+<li>Create a page per template and set it under Page Attributes &rarr; Template.</li>
+<li>Settings &rarr; Reading: set a static homepage and point Posts page at an
+empty page called Blog. The homepage picks up <code>front-page.php</code> on its
+own.</li>
+<li>Appearance &rarr; Customize &rarr; Finbolt theme for brand, colours, buttons
+and footer.</li>
+</ol>
+<h3>Templates</h3>
+<table>
+<tr><th>File</th><th>Serves</th></tr>
+<tr><td><code>front-page.php</code></td><td>The homepage, automatically</td></tr>
+<tr><td><code>page-templates/*.php</code></td><td>About, Benefits, Testimonials, Career, Support, Contact, Log in, Register — assign per page</td></tr>
+<tr><td><code>index.php</code></td><td>Blog index, from real posts</td></tr>
+<tr><td><code>single.php</code></td><td>One post, with comments</td></tr>
+<tr><td><code>page.php</code></td><td>Any page without one of the templates above</td></tr>
+<tr><td><code>archive.php</code>, <code>search.php</code>, <code>404.php</code></td><td>Archives, results, not found</td></tr>
+<tr><td><code>template-parts/post-card.php</code></td><td>One card in the post grid</td></tr>
+</table>
+<h3>How links resolve</h3>
+<p>The static pages link each other as <code>about.html</code>. In the theme those
+become <code>finbolt_link( 'about' )</code>, which looks for the page using that
+template, then a page with that slug, then falls back to <code>/about/</code>. So
+cross-links keep working whatever you name the pages.</p>
+<div class="note"><strong>Login and register in WordPress.</strong> Those two
+templates are the design's front-end forms and create no accounts. WordPress has
+its own authentication — to use it, set the customizer's button and log-in links to
+your registration URL and <code>wp-login.php</code>.</div>
+</section>
+
+<section id="wpcustom">
+<h2>9. Customizer</h2>
+<p>Appearance &rarr; Customize &rarr; <strong>Finbolt theme</strong>.</p>
+<table>
+<tr><th>Section</th><th>Controls</th></tr>
+<tr><td>Brand</td><td>Wordmark text. The logo mark comes from Appearance &rarr; Customize &rarr; Site Identity if you set one.</td></tr>
+<tr><td>Colours</td><td>Primary blue, deep blue and heading ink, written out as design tokens so every page follows.</td></tr>
+<tr><td>Buttons and sign-in</td><td>Button label, button link, log-in link. Leave the links empty to use the theme's own templates.</td></tr>
+<tr><td>Footer</td><td>Footer paragraph, contact email, phone, and four social URLs. A social icon only renders when its URL is filled in.</td></tr>
+</table>
+<h3>Menus and widgets</h3>
+<p>Three menu locations: Primary (header and drawer) and the two footer columns,
+Product and Company. Each footer column falls back to the shipped links until you
+assign a menu. There is one widget area, <em>Blog sidebar</em>.</p>
+<h3>Child theme</h3>
+<p>Customise via a child theme so updates do not overwrite your work. Create a
+folder with a <code>style.css</code> starting:</p>
+<pre><code>/*
+Theme Name: Finbolt Child
+Template: finbolt
+*/</code></pre>
+</section>
+
+<section id="a11y">
+<h2>10. Accessibility</h2>
+<p>What the template already does, and what to preserve as you edit:</p>
+<ul>
+<li>Every text element clears WCAG AA contrast, measured against the rendered
+backdrop rather than the declared colour — gradients and translucent overlays
+included.</li>
+<li>Interactive targets are at least 32px, checked from 320px up.</li>
+<li>All animation is behind <code>prefers-reduced-motion</code>.</li>
+<li>Form errors set <code>aria-invalid</code> and <code>aria-describedby</code>,
+and the first invalid field takes focus on submit.</li>
+<li>The drawer is a labelled <code>role="dialog"</code> and closes on Escape.</li>
+<li>Visible focus rings via <code>:focus-visible</code>; a skip link in the theme.</li>
+<li>Decorative SVG is <code>aria-hidden</code>; icon-only buttons carry
+<code>aria-label</code>.</li>
+</ul>
+<div class="note">Two habits undo most of this: white text on the pale top of a
+gradient, and a light translucent pill behind white text — a white overlay lightens
+its own backdrop, which is the wrong direction. Check any new section at 320px and
+in a reduced-motion browser.</div>
+</section>
+
+<section id="sell">
+<h2>11. Before you sell</h2>
+<p>Housekeeping worth doing once, before the first buyer:</p>
+<ul>
+<li><strong>Decide your licence.</strong> The source repository carries an MIT
+licence, which lets anyone redistribute and resell the code freely — that works
+against selling it. Replace it with your own EULA, or rely on your marketplace's
+licence terms. See <code>licensing/LICENSE.txt</code>.</li>
+<li><strong>The WordPress theme is GPL</strong> and has to be, because it calls
+WordPress functions. You can still charge for files, support and updates; you
+cannot stop a buyer redistributing the PHP. Price accordingly.</li>
+<li><strong>Replace the demo content.</strong> Every statistic, quote, job listing,
+blog post and partner name is invented. None of it is true.</li>
+<li><strong>Swap the favicon.</strong> Each page carries an inline SVG lightning
+bolt as a placeholder.</li>
+<li><strong>Update the contact details</strong> in the footer and on the contact
+page — the addresses, email and phone number are placeholders.</li>
+<li><strong>Point the forms somewhere</strong>, or state plainly on your sales page
+that they are front-end only. Buyers who discover it after purchase leave refund
+requests.</li>
+<li><strong>Set the theme URI and author</strong> in the theme's
+<code>style.css</code> header, which currently reads <code>example.com</code>.</li>
+</ul>
+</section>
+
+<section id="support">
+<h2>12. Credits</h2>
+<p><strong>Fonts</strong> — Plus Jakarta Sans and Inter, both SIL Open Font
+License 1.1, loaded from Google Fonts. To self-host, drop the
+<code>.woff2</code> files into <code>assets/fonts/</code>, swap the Google Fonts
+link for an <code>@font-face</code> block, and keep the OFL text beside them.</p>
+<p><strong>Icons</strong> — every icon is original inline SVG written for this
+template. No icon font, nothing to attribute.</p>
+<p><strong>Images</strong> — none. The illustrations are CSS gradients and inline
+SVG, and <code>assets/img/</code> is left empty for your own artwork.</p>
+<p><strong>Scripts</strong> — none. <code>main.js</code> is plain ES5-compatible
+JavaScript with no dependencies and no build step.</p>
+<p>Full detail in <code>licensing/third-party-assets.txt</code>.</p>
+</section>
+</main>
+</div>
+</body>
+</html>

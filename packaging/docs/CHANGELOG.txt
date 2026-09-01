@@ -1,0 +1,18 @@
+Finbolt — changelog
+===================
+
+1.0.0
+-----
+Initial release.
+
+* Ten static pages on one shared design system: home, about, benefits,
+  testimonials, career, blog, support, contact, login, register.
+* WordPress theme with eight page templates, a real blog loop, archive,
+  search, 404 and comment templates, three menu locations, a blog sidebar
+  and a customizer panel for brand, colours, buttons and footer details.
+* Staggered scroll reveals, counting figures, hero parallax, scroll progress
+  bar and back-to-top, all disabled under prefers-reduced-motion.
+* Every text element meets WCAG AA contrast, measured against the rendered
+  backdrop rather than the declared colour.
+* Verified from 320px to 1920px: no sideways scroll, no clipped content, no
+  undersized tap targets.

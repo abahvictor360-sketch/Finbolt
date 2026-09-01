@@ -5,3 +5,6 @@ __pycache__/
 *.pyc
 .vscode/
 .idea/
+
+# Build output - run `python3 package.py` to regenerate
+dist/

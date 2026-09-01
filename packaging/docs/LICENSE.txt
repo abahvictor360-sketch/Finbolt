@@ -1,0 +1,38 @@
+Finbolt — licensing
+===================
+
+YOUR CODE
+---------
+This template's own HTML, CSS, JavaScript and PHP are yours to license as you
+see fit. Two common choices when selling:
+
+  * A marketplace licence. If you sell through a marketplace (ThemeForest,
+    Creative Market and similar) their Regular/Extended licence terms apply and
+    you do not ship your own EULA. Delete this file and let theirs govern.
+
+  * Your own EULA. If you sell direct, replace this file with your end-user
+    licence agreement. State clearly how many end products one purchase covers,
+    whether the buyer may resell or redistribute the files, and what support and
+    updates they get.
+
+WORDPRESS THEME
+---------------
+The WordPress theme in the separate package is declared GPL-2.0-or-later in its
+style.css header, because a theme that calls WordPress functions is a derivative
+work of WordPress. This is the normal, expected licence for a commercial theme —
+paid themes are sold under the GPL every day, and it does not stop you charging
+for the files, for support, or for updates. What it does mean is you cannot stop
+a buyer from redistributing the theme's PHP. Price and package accordingly.
+
+If that is not acceptable, sell the HTML template only.
+
+NOTE ON THIS REPOSITORY
+-----------------------
+The source repository currently carries an MIT licence file. MIT lets anyone
+redistribute and resell the code freely, which works against selling it. Decide
+what you want before the first sale and update the repository to match — see the
+"Before you sell" section of the documentation.
+
+THIRD-PARTY ASSETS
+------------------
+See third-party-assets.txt.

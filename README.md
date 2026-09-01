@@ -93,6 +93,52 @@ python3 -m http.server 8000
 Any static host works. For GitHub Pages: push to `main`, then Settings → Pages →
 Source: *Deploy from a branch* → `main` / `root`.
 
+## Packaging for sale
+
+This repository is the single source for two sellable products:
+
+```bash
+python3 package.py
+```
+
+writes both to `dist/` (git-ignored):
+
+| File | What it is |
+| --- | --- |
+| `finbolt-html-<version>.zip` | The static template, plus `documentation/`, `licensing/` and a changelog |
+| `finbolt-wordpress-<version>.zip` | An installable WordPress theme |
+
+The WordPress page templates are **generated from `build.py`'s section markup**, the
+same strings the static pages use, so the two products cannot drift apart. Static
+links like `about.html` are rewritten to `finbolt_link( 'about' )`, which resolves
+to whichever page the site owner assigned that template to.
+
+```
+packaging/
+├── wp/        hand-written theme files (header, footer, loops, functions, customizer)
+├── docs/      buyer documentation, readmes, changelog, licensing, screenshot
+└── tests/     render.php - executes every template against stubbed WordPress
+package.py     assembles and zips both products
+```
+
+`package.py` will not produce a zip unless every theme file passes `php -l` **and**
+every template renders through `packaging/tests/render.php`. That harness stubs the
+WordPress functions the theme calls, then checks each template emits a complete
+document with the frame, header, footer, linked assets and no unresolved `.html`
+links. It is not a substitute for testing in a real WordPress install, but it turns
+"it lints" into "it runs".
+
+Bumping the version: `VERSION` in `package.py`, `Version:` in
+`packaging/wp/style.css`, `Stable tag:` in `packaging/docs/readme-wp.txt`, and a new
+entry in `packaging/docs/CHANGELOG.txt`.
+
+### Before the first sale
+
+`packaging/docs/documentation.html` has a "Before you sell" section covering the
+licence decision, the demo content and the placeholder favicon and contact details.
+The short version: **this repository is MIT-licensed**, which lets anyone resell the
+code freely — decide what you actually want before you list it.
+
 ## Licence
 
 MIT.

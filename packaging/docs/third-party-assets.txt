@@ -1,0 +1,31 @@
+Finbolt — third-party assets
+============================
+
+FONTS
+-----
+Plus Jakarta Sans   SIL Open Font License 1.1   https://fonts.google.com/specimen/Plus+Jakarta+Sans
+Inter               SIL Open Font License 1.1   https://fonts.google.com/specimen/Inter
+
+Both load from Google Fonts at runtime. The OFL permits commercial use and
+redistribution. If you would rather self-host them — faster, and no third-party
+request — download the families, drop the .woff2 files into assets/fonts/,
+replace the Google Fonts <link> with an @font-face block, and keep the OFL text
+alongside them as the licence requires.
+
+ICONS
+-----
+Every icon is hand-drawn inline SVG written for this template. There is no icon
+font or third-party icon set, so there is nothing further to attribute and no
+licence to pass on.
+
+IMAGES
+------
+The template ships with no raster images. The illustrations are CSS gradients
+and inline SVG. assets/img/ is left empty for your own artwork.
+
+DEMO CONTENT
+------------
+All company names, statistics, quotes, job listings and blog posts are invented
+placeholder copy. The partner names in the trusted-by strip are not real
+companies. Nothing here is licensed from anyone, and nothing needs clearing —
+but none of it is true, so replace it before launch.
