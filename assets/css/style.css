@@ -823,8 +823,24 @@ h1, h2, h3, h4 {
   transition: transform .22s ease, background .22s ease, color .22s ease;
 }
 .acc__item[data-open="true"] .acc__q i { transform: rotate(45deg); background: var(--blue); color: #fff; }
-.acc__a { display: none; padding: 0 20px 18px; color: var(--muted); font-size: .93rem; }
-.acc__item[data-open="true"] .acc__a { display: block; }
+/* The answer sits in a grid row that animates from 0fr to 1fr, so the panel
+   slides open at its true height without measuring anything in JS. */
+.acc__item {
+  display: grid;
+  grid-template-rows: auto 0fr;
+  transition: grid-template-rows .34s cubic-bezier(.2,.7,.3,1);
+}
+.acc__item[data-open="true"] { grid-template-rows: auto 1fr; }
+.acc__a {
+  overflow: hidden;
+  min-height: 0;
+  padding: 0 20px;
+  color: var(--muted);
+  font-size: .93rem;
+  opacity: 0;
+  transition: opacity .28s ease .04s;
+}
+.acc__item[data-open="true"] .acc__a { opacity: 1; padding-bottom: 18px; }
 
 /* --- Forms ---------------------------------------------------------------- */
 .form { display: grid; gap: 14px; }
@@ -950,8 +966,62 @@ h1, h2, h3, h4 {
 }
 
 /* --- Scroll reveal -------------------------------------------------------- */
-.reveal { opacity: 0; transform: translateY(22px); transition: opacity .6s ease, transform .6s cubic-bezier(.2,.7,.3,1); }
+/* Direction and distance come from custom properties so one transition rule
+   serves every variant; --rd is the stagger delay set per element in JS. */
+.reveal {
+  opacity: 0;
+  transform: translate3d(var(--rx, 0), var(--ry, 22px), 0) scale(var(--rs, 1));
+  transition:
+    opacity .62s cubic-bezier(.2,.7,.3,1) var(--rd, 0ms),
+    transform .62s cubic-bezier(.2,.7,.3,1) var(--rd, 0ms);
+}
 .reveal.is-in { opacity: 1; transform: none; }
+.reveal--left  { --rx: -30px; --ry: 0; }
+.reveal--right { --rx: 30px;  --ry: 0; }
+.reveal--scale { --ry: 16px;  --rs: .96; }
+
+/* --- Scroll-linked chrome ------------------------------------------------- */
+.progress {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  z-index: 90;
+  transform-origin: 0 50%;
+  transform: scaleX(var(--p, 0));
+  background: linear-gradient(90deg, var(--blue-bright), var(--blue), var(--blue-deep));
+  pointer-events: none;
+}
+
+.totop {
+  position: fixed;
+  right: 22px; bottom: 22px;
+  z-index: 80;
+  width: 44px; height: 44px;
+  display: grid; place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: #0D1526;
+  color: #fff;
+  box-shadow: 0 12px 30px rgba(11, 18, 32, .28);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(14px) scale(.9);
+  transition: opacity .28s ease, transform .28s cubic-bezier(.2,.7,.3,1), visibility .28s;
+}
+.totop[data-show="true"] { opacity: 1; visibility: visible; transform: none; }
+.totop:hover { background: var(--blue); transform: translateY(-2px); }
+.totop svg { width: 16px; height: 16px; }
+
+/* Parallax offsets, driven by JS on scroll. */
+.hero__stage { transform: translate3d(0, var(--par, 0px), 0); }
+.band::after { background-position: 0 var(--gridY, 0px); }
+
+/* Pop the newly selected audience card on tab change. */
+@keyframes swapIn { from { opacity: .25; } }
+.fcard--live.is-swap { animation: swapIn .42s cubic-bezier(.2,.7,.3,1); }
+
+/* Counters hold their own width while animating so the layout doesn't jitter. */
+[data-count] { font-variant-numeric: tabular-nums; }
 
 /* --- Responsive ----------------------------------------------------------- */
 @media (max-width: 980px) {
@@ -1000,4 +1070,6 @@ h1, h2, h3, h4 {
     scroll-behavior: auto !important;
   }
   .reveal { opacity: 1; transform: none; }
+  .hero__stage { transform: none; }
+  .totop { transition: opacity .001ms; }
 }
