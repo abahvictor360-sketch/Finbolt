@@ -18,6 +18,12 @@ I = {
   "bolt":    svg('<path d="M13 2 4.5 13.5H11l-1 8.5 8.5-11.5H12l1-8.5Z"/>', stroke=False),
   "arrow":   svg('<path d="M5 12h13"/><path d="m12 5 7 7-7 7"/>'),
   "check":   svg('<path d="M20 6 9 17l-5-5"/>'),
+  "eye":     svg('<path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/>'
+                 '<circle cx="12" cy="12" r="3"/>'),
+  "eyeoff":  svg('<path d="M4 4l16 16"/>'
+                 '<path d="M9.9 5.9A9.7 9.7 0 0 1 12 5.5c6 0 9.5 6.5 9.5 6.5a17 17 0 0 1-3.3 4"/>'
+                 '<path d="M6.4 7.9A17 17 0 0 0 2.5 12S6 18.5 12 18.5a9.6 9.6 0 0 0 3.6-.7"/>'
+                 '<path d="M9.9 10.2a3 3 0 0 0 4 4.2"/>'),
   "spark":   svg('<path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M18 6l-2.5 2.5M8.5 15.5 6 18"/>'),
   "user":    svg('<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/>'),
   "users":   svg('<circle cx="9" cy="8" r="3.4"/><path d="M2.5 20c0-3.4 2.9-5.2 6.5-5.2s6.5 1.8 6.5 5.2"/><path d="M17 8.4a3 3 0 0 1 0 5.2M18.5 20c0-2.2-.8-3.7-2-4.6"/>'),
@@ -80,7 +86,8 @@ def header(active):
       <nav class="nav" aria-label="Primary">
         %s
       </nav>
-      <a class="header__cta" href="contact.html">Get started<span class="dot">%s</span></a>
+      <a class="header__login" href="login.html">Log in</a>
+      <a class="header__cta" href="register.html">Get started<span class="dot">%s</span></a>
       <button class="burger" data-drawer-open aria-label="Open menu">
         <span class="burger__bars"><i></i><i></i><i></i></span>Menu
       </button>
@@ -96,7 +103,8 @@ def header(active):
       <nav aria-label="Mobile">
         %s
       </nav>
-      <a class="btn btn--primary" href="contact.html">Get started%s</a>
+      <a class="btn btn--primary" href="register.html">Get started%s</a>
+      <a class="btn btn--ghost" href="login.html" style="width:100%%;justify-content:center;margin-top:10px">Log in</a>
     </div>
   </div>
 """ % (BRAND, nav_links(active), I["arrow"], BRAND, nav_links(active), I["arrow"])
@@ -136,6 +144,8 @@ FOOTER = """  <footer class="footer">
           <a href="benefits.html">Benefits</a>
           <a href="testimonials.html">Testimonials</a>
           <a href="support.html">Support centre</a>
+          <a href="login.html">Log in</a>
+          <a href="register.html">Create account</a>
         </div>
       </div>
       <div>
@@ -1215,6 +1225,167 @@ CONTACT_PAGE = """%(head)s
 }
 
 # --------------------------------------------------------------------------
+# AUTH (login / register)
+# --------------------------------------------------------------------------
+AUTH_POINTS = {
+    "login": [
+        "Every account, card and payout on one dashboard",
+        "Same-day settlement, seven days a week",
+        "Fraud screening running on every transaction",
+    ],
+    "register": [
+        "Live in about four minutes, no paperwork to post",
+        "Free for 30 days &mdash; no card needed to start",
+        "Keep your first $10,000 of payments fee-free",
+    ],
+}
+
+
+def auth_pitch(mode):
+    title = ("Welcome back to <em>Finbolt</em>" if mode == "login"
+             else "Start getting paid <em>properly</em>")
+    lead = ("Sign in to see today's settlements, chase an invoice or move money out."
+            if mode == "login" else
+            "Open an account, connect your first payment method and send an invoice "
+            "before your coffee goes cold.")
+    items = "\n        ".join(
+        '<li>%s%s</li>' % (I["check"], t) for t in AUTH_POINTS[mode])
+    return """      <div class="auth__pitch">
+        <span class="eyebrow eyebrow--onblue"><i>%s</i>Finbolt payments, faster</span>
+        <h1>%s</h1>
+        <p>%s</p>
+        <ul class="auth__points">
+        %s
+        </ul>
+        <p class="auth__trust">%s Trusted by more than 10,000 businesses</p>
+      </div>
+""" % (I["bolt"], title, lead, items, I["shield"])
+
+
+def pw_field(fid, label, autocomplete, hint=""):
+    return """          <div class="field-row">
+            <label for="%s">%s</label>
+            <div class="field-pw">
+              <input id="%s" name="%s" type="password" autocomplete="%s"
+                placeholder="At least 8 characters" required>
+              <button class="field-pw__toggle" type="button" data-pw-toggle
+                aria-label="Show password" aria-pressed="false">%s%s</button>
+            </div>
+            %s
+            <p class="field-err" id="%s-err" role="alert"></p>
+          </div>
+""" % (fid, label, fid, fid, autocomplete, I["eye"], I["eyeoff"], hint, fid)
+
+
+LOGIN_FORM = """        <form class="authform" data-auth="login" novalidate>
+          <div class="field-row">
+            <label for="l-email">Work email</label>
+            <input id="l-email" name="l-email" type="email" autocomplete="email"
+              placeholder="john@company.com" required>
+            <p class="field-err" id="l-email-err" role="alert"></p>
+          </div>
+%(pw)s
+          <div class="authform__aside">
+            <label class="checkline"><input type="checkbox" name="remember" checked>
+              <span>Keep me signed in</span></label>
+            <a class="authform__link" href="contact.html">Forgot password?</a>
+          </div>
+          <button class="btn btn--primary authform__submit" type="submit">Sign in%(arrow)s</button>
+        </form>
+""" % {"pw": pw_field("l-password", "Password", "current-password"),
+       "arrow": I["arrow"]}
+
+
+REGISTER_FORM = """        <form class="authform" data-auth="register" novalidate>
+          <div class="form__row">
+            <div class="field-row">
+              <label for="r-first">First name</label>
+              <input id="r-first" name="r-first" type="text" autocomplete="given-name"
+                placeholder="John" required>
+              <p class="field-err" id="r-first-err" role="alert"></p>
+            </div>
+            <div class="field-row">
+              <label for="r-last">Last name</label>
+              <input id="r-last" name="r-last" type="text" autocomplete="family-name"
+                placeholder="Clayton" required>
+              <p class="field-err" id="r-last-err" role="alert"></p>
+            </div>
+          </div>
+          <div class="field-row">
+            <label for="r-email">Work email</label>
+            <input id="r-email" name="r-email" type="email" autocomplete="email"
+              placeholder="john@company.com" required>
+            <p class="field-err" id="r-email-err" role="alert"></p>
+          </div>
+          <div class="field-row">
+            <label for="r-company">Business name</label>
+            <input id="r-company" name="r-company" type="text" autocomplete="organization"
+              placeholder="Northwind Studios" required>
+            <p class="field-err" id="r-company-err" role="alert"></p>
+          </div>
+%(pw)s
+          <label class="checkline checkline--terms">
+            <input type="checkbox" name="terms" required>
+            <span>I agree to the <a href="contact.html">terms of service</a> and
+              <a href="contact.html">privacy policy</a>.</span>
+          </label>
+          <p class="field-err" id="r-terms-err" role="alert"></p>
+          <button class="btn btn--primary authform__submit" type="submit">Create account%(arrow)s</button>
+        </form>
+""" % {"pw": pw_field("r-password", "Password", "new-password",
+                      hint='<div class="strength" data-strength hidden>'
+                           '<span class="strength__bars"><i></i><i></i><i></i></span>'
+                           '<span class="strength__label"></span></div>'),
+       "arrow": I["arrow"]}
+
+
+def auth_page(mode):
+    is_login = mode == "login"
+    return """  <section class="band auth">
+    <div class="wrap auth__grid">
+%(pitch)s
+      <div class="auth__card">
+        <h2 class="auth__title">%(title)s</h2>
+        <p class="auth__sub">%(sub)s</p>
+
+        <div class="auth__done" data-auth-done hidden>
+          <span class="auth__done-mark">%(check)s</span>
+          <h3>%(donetitle)s</h3>
+          <p>%(donebody)s</p>
+          <a class="btn btn--ghost" href="index.html">Back to the site%(arrow)s</a>
+        </div>
+
+%(form)s
+        <p class="auth__swap">%(swap)s</p>
+        <p class="auth__note">This is a front-end demo &mdash; no account is created and
+          nothing is sent anywhere. Point the form at your own backend before going live.</p>
+      </div>
+    </div>
+  </section>
+""" % {
+        "pitch": auth_pitch(mode),
+        "title": "Sign in" if is_login else "Create your account",
+        "sub": ("Welcome back. Enter your details to reach your dashboard."
+                if is_login else
+                "Four minutes to your first payment. No card needed."),
+        "check": I["check"], "arrow": I["arrow"],
+        "donetitle": "Signed in" if is_login else "Account created",
+        "donebody": ("In the real product this is where your dashboard would load."
+                     if is_login else
+                     "In the real product we would email you a link to confirm this "
+                     "address and set your account live."),
+        "form": LOGIN_FORM if is_login else REGISTER_FORM,
+        "swap": ('New to Finbolt? <a href="register.html">Create an account</a>'
+                 if is_login else
+                 'Already have an account? <a href="login.html">Sign in</a>'),
+    }
+
+
+LOGIN_PAGE = auth_page("login")
+REGISTER_PAGE = auth_page("register")
+
+
+# --------------------------------------------------------------------------
 # Write
 # --------------------------------------------------------------------------
 PAGES = [
@@ -1242,6 +1413,12 @@ PAGES = [
     ("contact.html", "Contact Finbolt",
      "Talk to sales or support about opening an account, pricing or a payment.",
      CONTACT_PAGE),
+    ("login.html", "Log in to Finbolt",
+     "Sign in to your Finbolt account to see settlements, invoices and payouts.",
+     LOGIN_PAGE),
+    ("register.html", "Create your Finbolt account",
+     "Open a Finbolt account in about four minutes. Free for 30 days, no card needed.",
+     REGISTER_PAGE),
 ]
 
 for fname, title, desc, main in PAGES:

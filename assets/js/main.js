@@ -2,6 +2,8 @@
 (function () {
   "use strict";
 
+  var EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
   /* ---- Mobile drawer ---------------------------------------------------- */
   var drawer = document.querySelector("[data-drawer]");
   function setDrawer(open) {
@@ -252,14 +254,139 @@
     });
   });
 
+  /* The hero and CTA capture fields are the front door to sign-up: carry the
+     address straight into the register form rather than dead-ending here. */
   document.querySelectorAll("[data-capture]").forEach(function (form) {
     form.addEventListener("submit", function (e) {
       e.preventDefault();
-      var note = form.parentElement.querySelector(".capture__note");
-      if (note) note.textContent = "Thanks — check your inbox to finish setting up your account.";
-      form.reset();
+      var input = form.querySelector('input[type="email"]');
+      var email = input && input.value.trim();
+      if (!email || !EMAIL.test(email)) {
+        if (input) input.focus();
+        return;
+      }
+      window.location.href = "register.html?email=" + encodeURIComponent(email);
     });
   });
+
+  /* ---- Auth forms -------------------------------------------------------- */
+  /* Front-end only: this validates and reports, it does not create accounts. */
+  function showPassword(btn) {
+    var input = btn.parentElement.querySelector("input");
+    if (!input) return;
+    var reveal = input.type === "password";
+    input.type = reveal ? "text" : "password";
+    btn.setAttribute("aria-pressed", reveal ? "true" : "false");
+    btn.setAttribute("aria-label", reveal ? "Hide password" : "Show password");
+  }
+  document.querySelectorAll("[data-pw-toggle]").forEach(function (btn) {
+    btn.addEventListener("click", function () { showPassword(btn); });
+  });
+
+  var STRENGTH = ["Too short", "Weak", "Good", "Strong"];
+  function strengthOf(v) {
+    if (v.length < 8) return 0;
+    var score = 1;
+    if (/[a-z]/.test(v) && /[A-Z]/.test(v)) score++;
+    if (/\d/.test(v)) score++;
+    if (/[^A-Za-z0-9]/.test(v)) score++;
+    if (v.length >= 12) score++;
+    return Math.min(3, score - 1) || 1;
+  }
+  document.querySelectorAll("[data-strength]").forEach(function (meter) {
+    var input = meter.closest(".field-row").querySelector("input");
+    var label = meter.querySelector(".strength__label");
+    if (!input) return;
+    input.addEventListener("input", function () {
+      var v = input.value;
+      meter.hidden = v.length === 0;
+      var level = strengthOf(v);
+      meter.setAttribute("data-level", String(level));
+      label.textContent = STRENGTH[level];
+    });
+  });
+
+  function errorFor(input) { return document.getElementById(input.id + "-err"); }
+
+  function setError(input, message) {
+    var slot = errorFor(input);
+    if (slot) slot.textContent = message || "";
+    if (message) {
+      input.setAttribute("aria-invalid", "true");
+      if (slot) input.setAttribute("aria-describedby", slot.id);
+    } else {
+      input.removeAttribute("aria-invalid");
+    }
+    return !message;
+  }
+
+  function checkField(input, mode) {
+    var v = (input.value || "").trim();
+    if (input.type === "email") {
+      if (!v) return setError(input, "Enter your email address.");
+      return setError(input, EMAIL.test(v) ? "" : "That does not look like an email address.");
+    }
+    if (input.type === "password") {
+      if (!v) return setError(input, "Enter your password.");
+      if (mode === "register") {
+        if (v.length < 8) return setError(input, "Use at least 8 characters.");
+        if (!/[A-Za-z]/.test(v) || !/\d/.test(v))
+          return setError(input, "Mix in at least one letter and one number.");
+      }
+      return setError(input, "");
+    }
+    if (input.required) return setError(input, v ? "" : "This field is required.");
+    return true;
+  }
+
+  document.querySelectorAll("[data-auth]").forEach(function (form) {
+    var mode = form.getAttribute("data-auth");
+    var fields = [].slice.call(form.querySelectorAll("input[required]"))
+      .filter(function (i) { return i.type !== "checkbox"; });
+    var terms = form.querySelector('input[name="terms"]');
+    var done = form.parentElement.querySelector("[data-auth-done]");
+
+    fields.forEach(function (input) {
+      /* Report on the way out of a field, then keep it live once it has failed. */
+      input.addEventListener("blur", function () { checkField(input, mode); });
+      input.addEventListener("input", function () {
+        if (input.getAttribute("aria-invalid") === "true") checkField(input, mode);
+      });
+    });
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var bad = null;
+      fields.forEach(function (input) {
+        if (!checkField(input, mode) && !bad) bad = input;
+      });
+      if (terms) {
+        var slot = document.getElementById("r-terms-err");
+        var ok = terms.checked;
+        if (slot) slot.textContent = ok ? "" : "Please accept the terms to continue.";
+        if (!ok && !bad) bad = terms;
+      }
+      if (bad) { bad.focus(); return; }
+
+      form.hidden = true;
+      var swap = form.parentElement.querySelector(".auth__swap");
+      if (swap) swap.hidden = true;
+      if (done) {
+        done.hidden = false;
+        done.scrollIntoView({ block: "center", behavior: reduce ? "auto" : "smooth" });
+      }
+    });
+  });
+
+  /* Someone arriving from a capture field already told us their address. */
+  var seeded = /[?&]email=([^&]+)/.exec(window.location.search);
+  if (seeded) {
+    var target = document.querySelector('[data-auth] input[type="email"]');
+    if (target) {
+      try { target.value = decodeURIComponent(seeded[1].replace(/\+/g, " ")); }
+      catch (err) { /* malformed escape in the query string — leave it blank */ }
+    }
+  }
 
   /* ---- Footer year ------------------------------------------------------ */
   document.querySelectorAll("[data-year]").forEach(function (el) {

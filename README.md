@@ -15,6 +15,8 @@ stylesheet, no build step and no dependencies — open `index.html` and it runs.
 | Blog | `blog.html` | Featured long read, six-post grid |
 | Support | `support.html` | Six help categories, FAQ accordion, three contact channels |
 | Contact | `contact.html` | Contact form, office details, quick answers |
+| Log in | `login.html` | Sign-in form beside a value panel on the blue band |
+| Register | `register.html` | Sign-up form, password strength meter, terms gate |
 
 Every page shares the same header, footer, blue gradient band and CTA, so the design
 stays identical as pages are added.
@@ -25,6 +27,7 @@ stays identical as pages are added.
 .
 ├── index.html            about.html      benefits.html   testimonials.html
 ├── career.html           blog.html       support.html    contact.html
+├── login.html            register.html
 ├── assets/
 │   ├── css/style.css     all design tokens, components and breakpoints
 │   └── js/main.js        drawer, tabs, accordion, scroll reveal, forms
@@ -75,8 +78,12 @@ python3 -m http.server 8000
 
 ## Notes before going live
 
-- The contact form and the email capture fields are front-end only. Point them at your
-  own backend, Formspree, Netlify Forms or similar before launch.
+- The contact form, the email capture fields and the login/register forms are
+  front-end only. They validate properly but create no account and send nothing —
+  point them at your own backend, Supabase Auth, Formspree or similar before launch.
+- The header "Get started" opens `register.html`, and the hero and CTA email fields
+  carry the address into it as `register.html?email=...`, which the form reads and
+  prefills.
 - Partner names in the trusted-by strip are placeholders — swap in your real logos.
 - All statistics, quotes and job listings are sample content.
 - Replace the inline SVG favicon in each `<head>` with a real icon file.

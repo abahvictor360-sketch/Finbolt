@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Log in to Finbolt</title>
+<meta name="description" content="Sign in to your Finbolt account to see settlements, invoices and payouts.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><text y='19' font-size='20'>&#9889;</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div class="frame">
+  <header class="header">
+    <div class="wrap header__inner">
+      <a class="brand" href="index.html"><span class="brand__mark"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 4.5 13.5H11l-1 8.5 8.5-11.5H12l1-8.5Z"/></svg></span>Finbolt</a>
+      <nav class="nav" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="benefits.html">Benefits</a>
+        <a href="testimonials.html">Testimonials</a>
+        <a href="career.html">Career</a>
+        <a href="blog.html">Blog</a>
+        <a href="support.html">Support</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <a class="header__login" href="login.html">Log in</a>
+      <a class="header__cta" href="register.html">Get started<span class="dot"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13"/><path d="m12 5 7 7-7 7"/></svg></span></a>
+      <button class="burger" data-drawer-open aria-label="Open menu">
+        <span class="burger__bars"><i></i><i></i><i></i></span>Menu
+      </button>
+    </div>
+  </header>
+
+  <div class="drawer" data-drawer data-open="false" role="dialog" aria-modal="true" aria-label="Menu">
+    <div class="drawer__panel">
+      <div class="drawer__head">
+        <a class="brand" href="index.html"><span class="brand__mark"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 4.5 13.5H11l-1 8.5 8.5-11.5H12l1-8.5Z"/></svg></span>Finbolt</a>
+        <button class="drawer__close" data-drawer-close aria-label="Close menu">&times;</button>
+      </div>
+      <nav aria-label="Mobile">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="benefits.html">Benefits</a>
+        <a href="testimonials.html">Testimonials</a>
+        <a href="career.html">Career</a>
+        <a href="blog.html">Blog</a>
+        <a href="support.html">Support</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <a class="btn btn--primary" href="register.html">Get started<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13"/><path d="m12 5 7 7-7 7"/></svg></a>
+      <a class="btn btn--ghost" href="login.html" style="width:100%;justify-content:center;margin-top:10px">Log in</a>
+    </div>
+  </div>
+
+  <section class="band auth">
+    <div class="wrap auth__grid">
+      <div class="auth__pitch">
+        <span class="eyebrow eyebrow--onblue"><i><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 4.5 13.5H11l-1 8.5 8.5-11.5H12l1-8.5Z"/></svg></i>Finbolt payments, faster</span>
+        <h1>Welcome back to <em>Finbolt</em></h1>
+        <p>Sign in to see today's settlements, chase an invoice or move money out.</p>
+        <ul class="auth__points">
+        <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Every account, card and payout on one dashboard</li>
+        <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Same-day settlement, seven days a week</li>
+        <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Fraud screening running on every transaction</li>
+        </ul>
+        <p class="auth__trust"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 5 6v5.5c0 4.5 3 8 7 9.5 4-1.5 7-5 7-9.5V6l-7-3Z"/><path d="m9.2 12 2 2 3.6-3.8"/></svg> Trusted by more than 10,000 businesses</p>
+      </div>
+
+      <div class="auth__card">
+        <h2 class="auth__title">Sign in</h2>
+        <p class="auth__sub">Welcome back. Enter your details to reach your dashboard.</p>
+
+        <div class="auth__done" data-auth-done hidden>
+          <span class="auth__done-mark"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span>
+          <h3>Signed in</h3>
+          <p>In the real product this is where your dashboard would load.</p>
+          <a class="btn btn--ghost" href="index.html">Back to the site<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13"/><path d="m12 5 7 7-7 7"/></svg></a>
+        </div>
+
+        <form class="authform" data-auth="login" novalidate>
+          <div class="field-row">
+            <label for="l-email">Work email</label>
+            <input id="l-email" name="l-email" type="email" autocomplete="email"
+              placeholder="john@company.com" required>
+            <p class="field-err" id="l-email-err" role="alert"></p>
+          </div>
+          <div class="field-row">
+            <label for="l-password">Password</label>
+            <div class="field-pw">
+              <input id="l-password" name="l-password" type="password" autocomplete="current-password"
+                placeholder="At least 8 characters" required>
+              <button class="field-pw__toggle" type="button" data-pw-toggle
+                aria-label="Show password" aria-pressed="false"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="3"/></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4l16 16"/><path d="M9.9 5.9A9.7 9.7 0 0 1 12 5.5c6 0 9.5 6.5 9.5 6.5a17 17 0 0 1-3.3 4"/><path d="M6.4 7.9A17 17 0 0 0 2.5 12S6 18.5 12 18.5a9.6 9.6 0 0 0 3.6-.7"/><path d="M9.9 10.2a3 3 0 0 0 4 4.2"/></svg></button>
+            </div>
+            
+            <p class="field-err" id="l-password-err" role="alert"></p>
+          </div>
+
+          <div class="authform__aside">
+            <label class="checkline"><input type="checkbox" name="remember" checked>
+              <span>Keep me signed in</span></label>
+            <a class="authform__link" href="contact.html">Forgot password?</a>
+          </div>
+          <button class="btn btn--primary authform__submit" type="submit">Sign in<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13"/><path d="m12 5 7 7-7 7"/></svg></button>
+        </form>
+
+        <p class="auth__swap">New to Finbolt? <a href="register.html">Create an account</a></p>
+        <p class="auth__note">This is a front-end demo &mdash; no account is created and
+          nothing is sent anywhere. Point the form at your own backend before going live.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="wrap footer__grid">
+      <div>
+        <p class="footer__blurb">Finbolt is built on one idea: getting paid should be the
+          simplest part of running a business. We handle the plumbing so you can go
+          back to the work you actually started the company to do.</p>
+        <a class="brand" href="index.html"><span class="brand__mark"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 4.5 13.5H11l-1 8.5 8.5-11.5H12l1-8.5Z"/></svg></span>Finbolt</a>
+      </div>
+      <div>
+        <h4>Product</h4>
+        <div class="footer__links">
+          <a href="index.html">Home</a>
+          <a href="benefits.html">Benefits</a>
+          <a href="testimonials.html">Testimonials</a>
+          <a href="support.html">Support centre</a>
+          <a href="login.html">Log in</a>
+          <a href="register.html">Create account</a>
+        </div>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <div class="footer__links">
+          <a href="about.html">About</a>
+          <a href="career.html">Career</a>
+          <a href="blog.html">Blog</a>
+          <a href="contact.html">Contact us</a>
+        </div>
+      </div>
+      <div>
+        <h4>Follow along</h4>
+        <div class="social">
+          <a href="#" aria-label="Finbolt on X"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></a>
+          <a href="#" aria-label="Finbolt on LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 9v10M5 5.2v.1M10 19v-5.5a2.5 2.5 0 0 1 5 0V19M10 19v-9"/></svg></a>
+          <a href="#" aria-label="Finbolt on Facebook"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14.5 8.5H17V5h-2.5A4 4 0 0 0 10.5 9v2H8v3.5h2.5V22H14v-7.5h2.6l.4-3.5H14V9.5a1 1 0 0 1 .5-1Z"/></svg></a>
+          <a href="#" aria-label="Finbolt on Instagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="4.6"/><circle cx="12" cy="12" r="3.4"/><path d="M16.8 7.3v.1"/></svg></a>
+        </div>
+        <p class="footer__blurb" style="margin-top:16px">hello@finbolt.com<br>+234 700 346 6538</p>
+      </div>
+    </div>
+    <div class="footer__bar">
+      <span>Finbolt</span>
+      <span>&copy; <span data-year>2026</span> Finbolt. All rights reserved.</span>
+    </div>
+  </footer>
+
+</div>
+<script src="assets/js/main.js"></script>
+</body>
+</html>

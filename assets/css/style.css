@@ -72,6 +72,9 @@ body {
 }
 
 img, svg { display: block; max-width: 100%; }
+/* An author display rule beats the UA rule for [hidden], so state it once here
+   and let every component use the attribute safely. */
+[hidden] { display: none !important; }
 a { color: inherit; text-decoration: none; }
 button { font: inherit; cursor: pointer; }
 ul { margin: 0; padding: 0; list-style: none; }
@@ -195,6 +198,17 @@ h1, h2, h3, h4 {
   color: var(--blue-deep);
   font-weight: 600;
 }
+
+.header__login {
+  color: #fff;
+  font-size: var(--fs-small);
+  font-weight: 600;
+  padding: 9px 12px;
+  border-radius: var(--r-pill);
+  white-space: nowrap;
+  transition: background .18s ease;
+}
+.header__login:hover { background: rgba(255,255,255,.18); }
 
 .header__cta {
   display: inline-flex;
@@ -1043,7 +1057,162 @@ h1, h2, h3, h4 {
 /* Counters hold their own width while animating so the layout doesn't jitter. */
 [data-count] { font-variant-numeric: tabular-nums; }
 
+
+/* --- Auth (login / register) --------------------------------------------- */
+.auth { padding: 128px 0 84px; }
+.auth__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 452px);
+  gap: 56px;
+  align-items: center;
+}
+
+.auth__pitch h1 {
+  font-size: clamp(1.9rem, 3.6vw, 2.6rem);
+  margin-top: 18px;
+  max-width: 15ch;
+}
+.auth__pitch h1 em { font-style: normal; color: #DCEBFF; }
+.auth__pitch > p { max-width: 46ch; margin: 16px 0 0; }
+.auth__points { display: grid; gap: 12px; margin-top: 26px; }
+.auth__points li {
+  display: flex; align-items: flex-start; gap: 11px;
+  font-size: .95rem;
+}
+.auth__points svg {
+  width: 20px; height: 20px; flex: none; margin-top: 2px;
+  padding: 3px; border-radius: 50%;
+  background: rgba(255,255,255,.22);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.34);
+}
+.auth__trust {
+  display: flex; align-items: center; gap: 9px;
+  margin: 30px 0 0; font-size: var(--fs-tiny);
+}
+.auth__trust svg { width: 15px; height: 15px; flex: none; }
+
+.auth__card {
+  background: #fff;
+  color: var(--ink-soft);
+  border-radius: var(--r-xl);
+  padding: 34px 32px;
+  box-shadow: var(--shadow-lg);
+}
+/* The card sits inside .band, whose rule paints headings white; the card is
+   white, so its own headings have to be set back to ink. */
+.auth__card h2, .auth__card h3 { color: var(--ink); }
+.auth__title { font-size: 1.5rem; }
+.auth__sub { margin: 8px 0 26px; font-size: .93rem; color: var(--muted); }
+
+.authform { display: grid; gap: 16px; }
+.field-row label {
+  display: block; font-size: var(--fs-tiny); font-weight: 600;
+  color: var(--ink); margin-bottom: 6px;
+}
+.field-row input {
+  width: 100%;
+  padding: 12px 15px;
+  border: 0;
+  border-radius: var(--r-sm);
+  background: var(--blue-wash);
+  box-shadow: inset 0 0 0 1px var(--line);
+  font: inherit; font-size: .93rem;
+  color: var(--ink);
+}
+.field-row input:focus {
+  outline: none;
+  box-shadow: inset 0 0 0 1.5px var(--blue);
+  background: #fff;
+}
+.field-row input[aria-invalid="true"] { box-shadow: inset 0 0 0 1.5px var(--rose); }
+
+.field-pw { position: relative; }
+.field-pw input { padding-right: 48px; }
+.field-pw__toggle {
+  position: absolute; top: 50%; right: 6px;
+  transform: translateY(-50%);
+  width: 34px; height: 34px;
+  display: grid; place-items: center;
+  border: 0; background: none; border-radius: 50%;
+  color: var(--muted);
+}
+.field-pw__toggle:hover { color: var(--blue-deep); background: var(--blue-tint); }
+.field-pw__toggle svg { width: 17px; height: 17px; }
+.field-pw__toggle svg:last-child { display: none; }
+.field-pw__toggle[aria-pressed="true"] svg:first-child { display: none; }
+.field-pw__toggle[aria-pressed="true"] svg:last-child { display: block; }
+
+.field-err {
+  margin: 6px 0 0;
+  font-size: var(--fs-tiny);
+  color: var(--rose);
+  min-height: 0;
+}
+.field-err:empty { display: none; }
+
+.strength { display: flex; align-items: center; gap: 10px; margin-top: 9px; }
+.strength__bars { display: flex; gap: 4px; flex: 1; }
+.strength__bars i {
+  height: 4px; flex: 1; border-radius: 2px; background: var(--line);
+  transition: background .2s ease;
+}
+.strength__label { font-size: var(--fs-tiny); color: var(--muted); }
+.strength[data-level="1"] .strength__bars i:nth-child(-n+1) { background: var(--rose); }
+.strength[data-level="2"] .strength__bars i:nth-child(-n+2) { background: #C77A12; }
+.strength[data-level="3"] .strength__bars i { background: var(--green); }
+
+.authform__aside {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 14px; flex-wrap: wrap;
+}
+.authform__link {
+  display: inline-block;
+  padding: 7px 2px;
+  font-size: var(--fs-tiny); font-weight: 600; color: var(--blue-deep);
+}
+.authform__link:hover { text-decoration: underline; }
+.authform__submit { width: 100%; justify-content: center; margin-top: 4px; }
+
+.checkline {
+  display: flex; align-items: flex-start; gap: 9px;
+  font-size: var(--fs-tiny); color: var(--ink-soft);
+}
+.checkline input {
+  width: 17px; height: 17px; flex: none; margin: 1px 0 0;
+  accent-color: var(--blue);
+}
+/* Padding on an inline link grows the hit area without breaking the sentence. */
+.checkline a { padding: 9px 1px; color: var(--blue-deep); font-weight: 600; }
+.checkline a:hover { text-decoration: underline; }
+.checkline--terms { margin-top: 2px; }
+
+.auth__swap { margin: 20px 0 0; font-size: .9rem; text-align: center; }
+.auth__swap a { display: inline-block; padding: 8px 4px; color: var(--blue-deep); font-weight: 600; }
+.auth__swap a:hover { text-decoration: underline; }
+.auth__note {
+  margin: 18px 0 0; padding-top: 16px;
+  border-top: 1px solid var(--line-soft);
+  font-size: var(--fs-tiny); color: var(--muted);
+}
+
+.auth__done { text-align: center; padding: 10px 0 4px; }
+.auth__done-mark {
+  width: 52px; height: 52px; margin: 0 auto 16px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  background: var(--green-bg); color: var(--green);
+}
+.auth__done-mark svg { width: 24px; height: 24px; }
+.auth__done h3 { font-size: 1.2rem; }
+.auth__done p { margin: 10px 0 20px; font-size: .93rem; color: var(--muted); }
+
 /* --- Responsive ----------------------------------------------------------- */
+@media (max-width: 1180px) {
+  /* The eight-item nav leaves no room for a separate sign-in link; the footer
+     and the auth pages themselves still carry it. */
+  .header__login { display: none; }
+}
+
 @media (min-width: 981px) and (max-width: 1180px) {
   .header__inner { gap: 12px; }
   .nav a { padding: 9px 10px; }
@@ -1084,6 +1253,9 @@ h1, h2, h3, h4 {
 
 @media (max-width: 980px) {
   .split { grid-template-columns: minmax(0, 1fr); }
+  .auth__grid { grid-template-columns: minmax(0, 1fr); gap: 38px; }
+  .auth__pitch h1 { max-width: none; }
+  .auth { padding: 116px 0 66px; }
 }
 
 @media (max-width: 620px) {
@@ -1100,6 +1272,8 @@ h1, h2, h3, h4 {
   .cta, .footer__bar { margin-inline: 12px; }
   .tl { grid-template-columns: 1fr; gap: 6px; }
   .totop { right: 14px; bottom: 14px; width: 40px; height: 40px; }
+  .auth__card { padding: 26px 20px; }
+  .auth__grid { gap: 30px; }
 }
 
 @media (max-width: 420px) {
@@ -1112,11 +1286,14 @@ h1, h2, h3, h4 {
   .invoice, .mock { padding: 16px 14px; }
   .capture { padding-left: 16px; }
   .cta__inner { padding: 56px 0; }
+  .auth__card { padding: 22px 16px; }
+  .authform__aside { flex-direction: column; align-items: flex-start; gap: 10px; }
 }
 
 @media (max-height: 460px) and (orientation: landscape) {
   .hero { padding-top: 96px; }
   .pagehead { padding: 96px 0 48px; }
+  .auth { padding: 96px 0 48px; }
   .hero__stage { margin-top: 30px; }
 }
 
